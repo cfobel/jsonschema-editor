@@ -1,0 +1,7 @@
+include RELEASE-VERSION
+include version.py
+include setup.py
+include paver-minilib.zip
+recursive-include jsonschema_editor *
+recursive-exclude jsonschema_editor *.pyc
+recursive-exclude jsonschema_editor *~
