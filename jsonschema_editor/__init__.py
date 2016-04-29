@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from pygtkhelpers.delegates import SlaveView
 from pygtkhelpers.utils import gsignal
 import gtk
@@ -70,7 +72,17 @@ class JsonschemaEditor(SlaveView):
 
         # TODO Create list store matching property data types from
         # `self.schema`.
-        pass
+        # ## Iterate through schema fields in a defined order ##
+        #  - Order fields by `index` property (where it exists).
+        #  - Note that `OrderedDict` maintains order that items are *inserted*.
+        #  - Use:
+        #      * `ordered_properties.iteritems()` to iterate through `(key,
+        #        value)` pairs in order.
+        #      * `ordered_properties.keys()` and `ordered_properties.values()`
+        #        are in the order of insertion.
+        ordered_properties = \
+            OrderedDict(sorted(self.schema['properties'].items(),
+                               key=lambda v: v[1].get('index', -1)))
 
         # TODO Fill list store with data from `self.data` data frame (if
         # necessary).
